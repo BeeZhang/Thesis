@@ -1,0 +1,574 @@
+\documentclass{beamer}
+\usepackage[USenglish]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{fancybox}
+\usepackage{lipsum}
+\usepackage{setspace}
+\usepackage{beamerthemesplit}
+\usetheme[compress]{Heidelberg}
+\definecolor{unirot}{rgb}{0.5976525,0,0}
+\usecolortheme[named=unirot]{structure}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+
+\title[Vector Field Time Dependency]{Techniques of vector field time dependency visualization}
+\author[X. Zhang]{Xiaozhong Zhang}
+\date{\today}
+\institute[Uni HD]{
+Universität Heidelberg\\
+\color{unirot}{hdxiaozhongzhang@gmail.com}}
+
+%---------------------------------------%
+%---------- RECURRING OUTLINE ----------%
+% have this if you'd like a recurring outline
+\AtBeginSection[]  % "Beamer, do the following at the start of every section"
+{
+\begin{frame}<beamer> 
+\frametitle{Outline} % make a frame titled "Outline"
+\tableofcontents[currentsection,hideallsubsections]  % show TOC and highlight current section
+\end{frame}
+}
+%----------------------------------------
+
+
+\begin{document}
+\frame[plain]{\titlepage}
+\frame{\frametitle{Outline}\tableofcontents[hideallsubsections]}
+
+%========================================
+%========================================
+
+\section[Definition]{Definitions}
+
+\subsection{Dynamical System Definition}
+\frame{
+\frametitle{Dynamical System Definition}
+\begin{itemize}
+	\item 2d space $\vect{D}$,  $\vect{D}\subset \vect{R}^{2}$, $\vect{X}(x,y)\in \vect{D}$.
+	\item 3d data field $\vect{\Omega}$, $\vect{\Omega} \subset \vect{R}^{2}\times\vect{R}$, where 2 dimensions are space and 1 dimension is time. $\vect{\xi}(\vect{X},T) \in \vect{\Omega}$ means $\vect{X}$ at time $T$.
+	\item 2d data set $\vect{V}(\xi(\vect{X},T))$ is the velocity at position $\vect{X}(x,y) \in D$ at time $T$ and $\vect{V}$ satisfied some level of continuity.	
+	\item Dynamical System Equations:\\
+	\begin{eqnarray}
+	\vect{\xi}^{'}(t;\xi(\vect{X_{0}},T+t))=\vect{V}(t;\xi(\vect{X_{0}},T+t))\\
+	\vect{\xi}(0;\vect{X}_{0},T)=\xi(\vect{X_{0}},T)
+	\end{eqnarray}
+\end{itemize}
+
+} % END OF FRAME
+
+%----------------------------------------
+
+\frame{
+\frametitle{Definition of Streamline and Pathline }
+
+\begin{itemize}
+\item Define $\phi^{t}(\vect{X}_{0},T)\in D$ as the point streamline reaching at time $t$ after start, and the streamline starts at seed $\xi(\vect{X_{0}},T)$. \\
+\item Satisfied differential equations:\\
+\begin{eqnarray}
+\frac{d\phi^{t}(\vect{X}_{0},T)}{dt}=V(\phi^{t}(\vect{X}_{0},T),T)\\
+\phi^{t=0}(\vect{X}_{0},T)=\xi(\vect{X_{0}},T)
+\end{eqnarray}
+\item Define $\psi^{t}(\vect{X}_{0},T)\in D$ as the point pathline reaching at time $t$ after start, and the pathline starts at seed $\xi(\vect{X_{0}},T)$. \\
+\item Satisfied differential equations:\\
+\begin{eqnarray}
+\frac{d\psi^{t}(\vect{X}_{0},T)}{dt}=V(\psi^{t}(\vect{X}_{0},T),T+t)\\
+\psi^{t=0}(\vect{X}_{0},T)=\xi(\vect{X_{0}},T)
+\end{eqnarray}
+\end{itemize}
+} % END OF FRAME
+
+%----------------------------------------
+\section[SPDis]{Distance of Streamline and Pathline}
+\frame[t]{
+\frametitle{Distance of Streamline and Pathline Definition after time $t_{n}$}
+
+\begin{itemize}
+
+	\item \textbf{Distance of Streamline and Pathine after time $t$} (marked as \textbf{$SPDis(\vect{X}_{0},T,t)$}) is defined as the distance of point $A$ and point $B$, where point $A$ is $\phi^{t}(\vect{X}_{0},T)$ in the streamline and point $B$ is $\psi^{t}(\vect{X}_{0},T) $ in pathline.
+	\begin{eqnarray}
+	SPDis(\vect{X}_{0},T,t)=\lVert\phi^{t}(\vect{X}_{0},T)-\psi^{t}(\vect{X}_{0},T)\rVert\\
+	=\biggr\lVert\int_{\tau=0}^{\tau=t}\biggr( V(\phi^{\tau}(\vect{X}_{0},T),T)-V(\psi^{\tau}(\vect{X}_{0},T),T+\tau)\biggr) d\tau\biggr\rVert
+	\end{eqnarray}
+	\item Actually $SPDis(\vect{X}_{0},T,t)$ is magnitude of integration of $\Delta V_{\tau}=V(\phi^{\tau}(\vect{X}_{0},T),T)-V(\psi^{\tau}(\vect{X}_{0},T),T+\tau)$  along the streamline and pathline. Meanwhile, at moment $\tau$, $\Delta V_{\tau}$ can be positive or negative.
+\end{itemize}
+
+} % END OF FRAME
+%========================================
+\frame{
+	\frametitle{End Point Distance of Streamline and Pathline}
+	\begin{itemize}
+		\item End Point Distance of Streamline and Pathline\\
+		If the pathline and streamline stop at time $t_{n}$ after start from the same seed, use the end point distance of streamline and pathline ($SPDis(\vect{X}_{0},T,t_{n})$) to weight the time dependency characteristics which shows the magnitude of $\Delta V_{\tau} $ integration, where$  \tau\in[0,t_{n}]$  . For short, write $SPDis(\vect{X}_{0},T,t_{n})$ as $SPDis_{t_{n}}$ or $SPDis$
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.45\textwidth]{pic/tu1.pdf}
+			\caption{\tiny Definition of $SPDis(\vect{X}_{0},t_{0},t_{n})$ }
+			\label{fig:SPDis}
+		\end{figure}
+	\end{itemize}
+} % END OF FRAME
+
+\frame{
+\frametitle{Advantage and Disadvantage}
+
+\begin{columns}[t]
+\begin{column}{.4\textwidth}
+{\color{unirot}Advantage}
+\begin{itemize}
+{\tiny   \item it measures  $\int_{\tau=0}^{\tau=t_{n}}\Delta V_{\tau}, \tau\in[0,t_{n}]$ along the streamline and pathline.
+  \item Simple. \\
+  It is easy to compute and understand.
+  \item Quantify\\
+  Compare to other methods, it gives a value to measure time dependency. }
+\end{itemize}
+\end{column}
+
+\begin{column}{.6\textwidth}
+{\color{unirot}Disadvantage} 
+\begin{itemize}
+ {\tiny  \item It is effected by magnitude of data.\\
+  Not only time dependency characteristics effect $SPDis_{t_{n}}$, but also the magnitude of data.
+  \item The fluctuation between negative and positive of $\Delta V_{\tau}, \tau\in[0,t_{n}]$ leads time dependency characteristics underestimated or overestimated.
+  \item People can not use $SPDis_{t_{n}}$ to predict $SPDis_{t_{m}}$, or compare the time dependency characteristics between $t_{n}$ and $t_{m}$. \\
+}
+\end{itemize}
+\end{column}
+
+\end{columns}
+\vfill
+{\tiny \textbf{Fit Data Set:}Generally,$SPDis$ only cares  what happens at the final moment and measures time dependency by this result, which means time dependency characteristics is weighted only base on the final result, it does not care about different situations during $\tau \in(0,t_{n})$. If along the streamline and pathline $SPDis_{\tau}, \tau \in [0,t_{n}]$ almost keep increasing and magnitude of data set do not have huge difference, $SPDis$ is a good way to measure time dependency.However,if $SPDis_{\tau}, \tau \in [0,t_{n}]$, is not almost monotonous but with huge fluctuation, i.e we can not ignore how the data changing along streamline and pathline, then $SPDis_{t_{n}}$ could not be a good way to measure time dependency.  Importantly, $SPDis_{t}$ predicates an concept to show time dependency, which is basement of later techniques.}
+} % END OF FRAME
+
+%----------------------------------------
+
+\frame{
+\frametitle{Result Analysis}
+We can compare this result to results by other techniques.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{pics/starttime625sGO2s}
+	\caption{{\tiny Seeds start at time T=6.25s,streamline and pathline go throught 2s, the image of $SPD_{t=2s}$ result}}
+	\label{fig:1}
+\end{figure}
+
+} % END OF FRAME
+
+%========================================
+
+\section[NorSPDis]{Normalized Distance of Streamline and Pathline}
+
+\frame{
+	\frametitle{Definition of Normalized Distance of Streamline and Pathline 1}
+	There are some cases in which velocity data is strongly time dependent but with small magnitude along the pathline and streamline. In those cases, $SPD_{t_{n}}$ would be small so that the time dependency of data is underestimated. Like the case below:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.45\textwidth]{pic/tu4.pdf}
+		\caption{\tiny The left case shows small $SPD_{t_{n}}$ with high time dependency velocity data, while the right case shows greater $SPD_{t_{n}}$ with lower time dependency velocity data along the streamline and pathline.}
+		\label{fig:NorSPDis}
+	\end{figure}
+	For eliminate the effect of velocity magnitude, introduce the concept of Normalized Distance of Streamline and Pathline.
+} % END OF FRAME
+
+%========================================
+\frame{
+\frametitle{Definition of Normalized Distance of Streamline and Pathline 2} 
+\textbf{Normalized Streamline and pathline distance} is defined as:
+$$NorSPDis(\vect{X}_{0},T,t)=\frac{2*SPDis(\vect{X}_{0},T,t)}{Slen(\vect{X}_{0},T,t)+Plen(\vect{X}_{0},T,t)}$$
+$$=2\frac{\biggr\lVert\int_{\tau=0}^{\tau=t}\biggr( V(\phi^{\tau}(\vect{X}_{0},T),T)-V(\psi^{\tau}(\vect{X}_{0},T),T+\tau)\biggr) d\tau\biggr\rVert}{\int_{\tau=0}^{\tau=t}\lVert( V(\phi^{\tau}(X_{0}),T))\rVert+\lVert V(\psi^{\tau}(X_{0}),T+\tau)\rVert)d\tau}$$
+
+So actually $NorSPDis(\vect{X}_{0},T,t)$ is measuring integration of velocity data difference divided by integration of velocity magnitude along streamline and pathline, which is similar to measure how many percentages of data changed at some level.
+} % END OF FRAME
+
+%========================================
+
+
+\frame{
+	\frametitle{Advantage and Disadvantage}
+	
+	\begin{columns}[t]
+		\begin{column}{.4\textwidth}
+			{\color{unirot}Advantage}
+			\begin{itemize}
+				\item Eliminate the effect of magnitude, comparing to $SPDis_{t_{n}}$\\
+				
+			\end{itemize}
+		\end{column}
+		
+		\begin{column}{.6\textwidth}
+			{\color{unirot}Disadvantage} 
+			\begin{itemize}
+			  \item {\tiny   The fluctuation between negative and positive of $\Delta V_{\tau}, \tau\in[0,t_{n}]$ leads time dependency characteristics underestimated. \\
+			   As similar as $SPDis_{t}$, when $\Delta V_{\tau}, \tau\in[0,t_{n}]$ is negative, $NorSPDis_{t}$ also leads  time dependency characteristics underestimated. Moreover, the situation is even worse than $SPDis_{t}$, because length of streamline and pathline always keeping increasing makes $NorSPDis_{t}$ even smaller.}
+			\end{itemize}
+		\end{column}
+	
+	\end{columns}
+	
+	\vfill
+	{\tiny \textbf{Fit Data Set:} if along the streamline and pathline $SPDis_{\tau}, \tau \in [0,t_{n}]$ almost keep increasing, $NorSPDis$ is a good way to measure time dependency. It also can compare time dependency of data sets with big magnitude difference along streamlines and pathlines.}
+} % END OF FRAME
+%========================================
+
+\frame{
+	\frametitle{Result Analysis}
+		\begin{columns}[t]
+			\begin{column}{.75\textwidth}
+				\begin{figure}[H]
+					\begin{minipage}{0.4\textwidth}
+						\centering
+						\includegraphics[width=0.8\textwidth]{pics/starttime625sGO2s}
+						\caption{{\tiny $SPDis$ at t=6.25s and go 2}s}
+						\label{fig:SPDisResult}
+					\end{minipage}
+					\begin{minipage}{0.40\textwidth}
+						\centering
+						\includegraphics[width=0.8\textwidth]{pic/NorSPDisStart250Go80Result.png}
+						\caption{{\tiny $NorSPDis$ at t=6.25s and go 2s, }}
+						\label{fig:NorSPDisResult}
+					\end{minipage}
+					\end{figure}	
+			\end{column}
+					\begin{column}{.3\textwidth}
+						\begin{figure}[H]
+							\centering
+							\includegraphics[width=0.8\textwidth]{pic/NorSPDisstreamlinepathline.png}
+							\caption{{\tiny streamline and pathline.}}
+							\label{fig:NorSPDisstreamlinepathline}
+						\end{figure}
+					\end{column}	
+				\end{columns}
+			{\tiny 	In the red cycle, data shows more highly time dependent and in the green cycle versa vice.
+		In the red area, although the $SPDis_{t_{n}}$ is not as great as in the green area, but the $NorSPDis$ is big because the percentage of velocity changed a lot along streamline and pathline. }
+
+} % END OF FRAME
+%========================================
+
+\section[Distance Difference]{Distance Difference of Streamline and Pathline}
+
+\frame{
+\frametitle{Distance Difference of Streamline and Pathline 1}
+As I mentioned before, $\Delta V_{\tau}$ can be both positive and negative. Therefore values of both $SPDis_{t_{n}}$ and $NorSPDis_{t_{n}}$ could fluctuate strongly, which means in many cases along pathline and streamline, $SPDis_{\tau}, \tau\in[0, t_{n}]$ is not monotonous .\\
+{\tiny Just as the figure\ref{fig:SPDisalongstreamlinepathline} shown, $\Delta V_{\tau=t_{4}}$ is negative so that $SPDis_{\tau=t_{4}}$ becomes smaller than $SPDis_{t=t_{3}}$. However, it is obvious that people can not say from $t_{0}$ to $t_{3}$ data is more time dependent than from $t_{0}$ to $t_{4}$. Actually it is in contract, as time dependency is a accumulated concept.}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{pic/tu2.pdf}
+	\caption{{\tiny $SPDis_{t_{i}}$ along the pathline and streamline.}}
+	\label{fig:SPDisalongstreamlinepathline}
+\end{figure}
+} % END OF FRAME
+
+%----------------------------------------
+
+
+\frame{
+	\frametitle{Distance Difference 2}
+Therefore, introduce the concept \textbf{Distance Difference} $DisDiff(\vect{X}_{0},T,t_{i})$, for short $DisDiff_{t_{i}}$. Green lines in the figure present $DisDiff_{t_{i}}$.\\
+{\tiny 	Divide time range $[0,t_{n}]$ into $t_{0}=0, t_{1},...,t_{i},...,t_{n}$, $DisDiff_{t_{i}}$ is the difference between $SPDis_{t_{i}}$ and $SPDis_{t_{i-1}}$}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\textwidth]{pic/tu3.pdf}
+		\caption{{\tiny $DisDiff_{t_{i}}$. along the pathline and streamline.}}
+		\label{fig:DisDiff}
+	\end{figure}
+
+} % END OF FRAME
+
+%----------------------------------------
+\frame{
+	\frametitle{Distance Difference 3}
+	Mathematically:
+	\begin{eqnarray}
+{\tiny 	DisDiff(\vect{X}_{0},T,t_{i})=\biggr\lvert SPDis(\vect{X}_{0},T,t_{i})-SPDis(\vect{X}_{0},T,t_{i-1})\biggr\rvert}\\
+{\tiny 	=\int_{t=t_{i-1}}^{t=t_{i}} \biggr\lVert V(\phi^{t}(\vect{X}_{0}),T)-V(\psi^{t}(\vect{X}_{0}),T+t)\biggr\rVert dt}
+	\end{eqnarray}
+	Also define \textbf{$SumDisDiff(\vect{X}_{0},T,t_{n})$}, which adds up also $DisDiff_{t_{i}}$ through time.
+	 \begin{eqnarray}
+{\tiny 	 SumDisDiff(\vect{X}_{0},T,t_{n})=\int_{t=0}^{t=t_{n}}\biggr\lVert V(\phi^{t}(\vect{X}_{0}),T)-V(\psi^{t}(\vect{X}_{0}),T)\biggr\rVert dt}
+	 \end{eqnarray}
+	 $SumDisDiff(\vect{X}_{0},T,t_{n})$ solves the problem of fluctuation of $SPDis_{t_{i}}$, because all $DisDiff(\vect{X}_{0},T,t_{i})$ are positive, which means it sums up all changes no matter it is negative or positive.
+} % END OF FRAME
+
+%----------------------------------------
+\frame{
+	\frametitle{Distance Difference 4}
+	Also define \textbf{$AverDisDiff(\vect{X}_{0},T,t_{n})$}, which adds up also $DisDiff_{t_{i}}$ through time and divided by $t_{n}$.
+	\begin{eqnarray}
+	 AverDisDiff(\vect{X}_{0},T,t_{n})=\frac{\int_{t=0}^{t=t_{n}}\biggr\lVert V(\phi^{t}(\vect{X}_{0}),T)-V(\psi^{t}(\vect{X}_{0}),T)\biggr\rVert dt}{t_{n}}
+	\end{eqnarray}
+    {\tiny As $SumDisDiff(\vect{X}_{0},T,t_{n})$ is monotonous increasing with $t_{n}$. Therefore it is not reasonable to compare time dependency of two data sets with different time range. $AverDisDiff(\vect{X}_{0},T,t_{i})$ predicates the average of time dependency during the time, so that people can use it to compare two data sets with different time range.}
+} % END OF FRAME
+
+%========================================
+
+
+\frame{
+	\frametitle{Advantage and Disadvantage}
+	
+	\begin{columns}[t]
+		\begin{column}{.6\textwidth}
+			{\color{unirot}Advantage}
+			\begin{itemize}
+				\item The effect of $\Delta V_{\tau}, \tau\in[0,t_{n}]$ fluctuation between negative and positive is eliminated .
+				\item Compare the time dependency characteristics between different $t_{n}$. 			
+			\end{itemize}
+		\end{column}
+		
+		\begin{column}{.4\textwidth}
+			{\color{unirot}Disadvantage} 
+			\begin{itemize}
+				\item Can not predict time dependency of data in a longer time range base on a smaller time range data.
+
+				
+			\end{itemize}
+		\end{column}
+		
+	\end{columns}
+	\vfill	
+	{\tiny \textbf{Fit Data Set:} $SumDisDiff_{t_{n}}$ and $AverDisDiff_{t_{n}}$ offers a very good way to measure data time dependency because of advantages. As shown in the formula, it exactly sums up all the changes along the pathline and streamline. We can use it to weight time dependency of most data sets.}
+} % END OF FRAME
+
+%----------------------------------------
+
+
+\frame{
+	\frametitle{Result Analysis 1}
+	\begin{columns}[t]
+		\begin{column}{.45\textwidth}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.65\textwidth]{pic/SumDisDiffstart250go80.png}
+				\caption{\tiny $SumDisDiff$ of streamlines and pathlines start at time T=6.25s and go through 2s. The area in read cycle is most different area compare to $SPDis$. The area in green cycle shows the specific structure of the data }
+				\label{fig:SumDisDiffstart250go80}
+			\end{figure}	
+		\end{column}
+		\begin{column}{.45\textwidth}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.65\textwidth]{pic/sumdisdiffstreamlinepathlinex=75-90y=65-72start250go2s.png}
+				\caption{\tiny Streamline and pathline example in red cycle area. Red is pathline, blue is streamline}
+				\label{fig:sumdisdiffstreamlinepathlinex=75-90y=65-72start250go2s}
+			\end{figure}
+		\end{column}	
+	\end{columns}
+	{\tiny 	In the red cycle area, it shows data is very time dependent. However, when just computing $SPDis$, the time dependency is not that obvious $SPDis_{t}$ becomes smaller in later time. The green cycle area shows the structure of the data.}
+	\vfill	
+} % END OF FRAME
+%----------------------------------------
+\frame{
+	\frametitle{Result Analysis 2}
+	\begin{columns}[t]
+		\begin{column}{.45\textwidth}
+			\begin{figure}[H]
+					\centering
+					\includegraphics[width=0.65\textwidth]{pic/sumdisdiffstreamlinepathlinex=779-80y=6-7start250go2s.png}
+					\caption{\tiny streamline and pathline to show less time dependent in this case, because at last part of time the velocity data has no big difference along pathline. Red curves are pathlines, blue curves are streamlines}
+					\label{fig:sumdisdiffstreamlinepathlinex=779-80y=6-7start250go2s}
+			\end{figure}	
+		\end{column}
+		\begin{column}{.45\textwidth}
+			\begin{figure}[H]
+					\centering
+					\includegraphics[width=0.65\textwidth]{pic/sumdisdiffstreamlinepathlinex=779-80y=14-15start250go2s.png}
+					\caption{\tiny Streamline and pathline  to show strongly time dependent at this area. red curves are pathlines, blue curves are streamlines}
+					\label{fig:sumdisdiffstreamlinepathlinex=779-80y=14-15start250go2s}
+			\end{figure}
+		\end{column}	
+	\end{columns}
+	{\tiny 	Comparing those two cases, in figure\ref{fig:sumdisdiffstreamlinepathlinex=779-80y=6-7start250go2s}, the $SumDisDiff_{t_{n}}$  is not as big as in figure\ref{fig:sumdisdiffstreamlinepathlinex=779-80y=14-15start250go2s}. However, we can tell that the $SPDis_{t_{n}}$ of two cases are almost the same. As figures shown, the velocity data along the pathline is diversification in \ref{fig:sumdisdiffstreamlinepathlinex=779-80y=14-15start250go2s}, which leads great $SumDiffDis_{t_{n}}$ and strong time dependency.}
+	\vfill	
+} % END OF FRAME
+
+
+%----------------------------------------
+\frame{
+	\frametitle{Result Analysis 3}
+	\begin{columns}[t]
+		\begin{column}{.45\textwidth}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.65\textwidth]{pic/Averdiffdisstart250go50.png}
+				\caption{\tiny The result of $AverDisDiff_{\tau=1.25s}$. Seeds start at time T= 6.25s go through 1.25s.}
+				\label{fig:Averdiffdisstart250go50}
+			\end{figure}	
+		\end{column}
+		\begin{column}{.45\textwidth}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.65\textwidth]{pic/Averdiffdisstart250go80.png}
+				\caption{\tiny The result of $AverDisDiff_{\tau=2s}$. Seeds start at time T= 6.25s go through 2s.}
+				\label{fig:Averdiffdisstart250go80}
+			\end{figure}
+		\end{column}	
+	\end{columns}
+{\tiny 	Comparing those pictures, it is easy to find out that time dependency of two data sets is similar with little difference, for instance the area at up-left is much smoother in the left figure.}
+	\vfill	
+} % END OF FRAME
+
+%----------------------------------------
+\section[Exponent Regression]{Exponent Regression of $SPDis_{t_{i}}$}
+\frame{
+\frametitle{Exponent Regression of $SPDis_{t_{i}}$ Definition }
+\begin{itemize}
+	\item Purpose\\
+	Introduce Exponent Regression of $SPDis$ to explain overall time dependency of data. Moreover it can also be used to predict time dependency of data in a bigger time range base on the exponent.
+	\item Definition\\
+     Divide the time range $[t_{0}=0,t_{1},...,t_{i},...,t_{n}]$ uniformly,compute $SPDis(\vect{X}_{0},t_{0},t_{i})$ at any moment. Regression mode :
+ $$f(t_{i})=\lambda e^{t_{i}}-\lambda$$ $i\in [1,n]$
+Least square to get $\lambda$
+ \begin{eqnarray}
+ \lambda=\frac{\sum_{i=1}^{i=n}SPDis_{i}(e^{t_{i}}-1)}{\sum_{i=1}^{i=n}(e^{t_{i}}-1)}
+ \end{eqnarray}
+ Call the $\lambda$ \textbf{Increasing Exponent of Time Dependency}.
+\end{itemize}
+
+} % END OF FRAME
+
+%========================================
+
+\frame{
+\frametitle{Example}
+	Compare two plots of $SPDis_{t_{i}}$, in the figure, we can get the regression curve and the parameter $\lambda$ can be used to describe and predict time dependency characteristics of data.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.65\textwidth]{pic/spdisplotcomparebluex=49y=20greeny=28.png}
+		\caption{{\tiny SPDis Plot at X=49 Y=28(green) and Y=20(blue) Time 6.25 go 2s.Green one $\lambda=0.00754665$, blue one $\lambda=0.0117781$ }}
+		\label{fig:spdisplotcomparebluex=49y=20greeny=28}
+	\end{figure}
+} % END OF FRAME
+
+%----------------------------------------
+\frame{
+	\frametitle{Result }
+	\begin{columns}[t]
+		\begin{column}{.45\textwidth}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.75\textwidth]{pic/LamdaStart250Go80.png}
+				\caption{{\tiny $\lambda$ of seeds start time T=6.25 go 2s. And the area in the cycle shows the main difference of the result compare to computing $SPDis_{t_{n}}$  }}
+				\label{fig:LamdaStart250Go80}
+			\end{figure}	
+		\end{column}
+		\begin{column}{.45\textwidth}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.75\textwidth]{pic/streamlinepathlinex=30-40y=37Start250Go80.png}
+				\caption{\tiny streamline and pathline example in the cycle area }
+				\label{fig:streamlinepathlinex=30-40y=37Start250Go80}
+			\end{figure}
+		\end{column}	
+	\end{columns}
+	{\tiny 	In the  cycle area, it shows more time dependency when using exponent regression comparing to computing $SPDis_{t_{n}}$, which is right basing on the streamline and pathline.}
+	\vfill	
+} % END OF FRAME
+%----------------------------------------
+\section[Time Measurement]{Time Dependency Analysis Given Fixed $NorSPDis$}
+\frame{
+	\frametitle{Definition }
+
+	 All algorithms mentioned before are computing measurements basing by given a fixed time to construct pathline and streamline. Here is different, constructing the pathline and streamline until the $SPDis_{\tau}$ reaching the threshold fixed $\mu$. Then take the time $\tau$ as an measurement. If $\tau$ is small, data is time dependent strongly, vice versa.\\
+	For avoiding effect of data magnitude, set fixed $\mu$ as normalized distance ($NorSPDis$) instead of $SPDis$ . \\
+	Mathematically:
+	\begin{eqnarray}
+{\tiny 	\Gamma=\min_{t}\biggr(2\frac{\biggr\lVert(\phi^{t}(\vect{X}_{0},T)-\psi^{t}(\vect{X}_{0},T)) \biggr\rVert}{\int_{\tau=0}^{\tau=t}[\lVert\phi^{\tau}(X_{0},T)-\phi^{\tau}(X_{0},T)\rVert+\lVert\psi^{\tau}(X_{0},T)-\psi^{\tau}(X_{0},T)\biggr\rVert]d\tau}>=\mu\biggr)}
+	\end{eqnarray}
+	
+	call $\Gamma$ \textbf{Normalized Reach Time}
+}% END OF FRAME
+%----------------------------------------
+
+\frame{
+	\frametitle{Example }
+	Below are three cases of $\Gamma$
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{pic/tu5.pdf}
+			\caption{{\tiny Three cases of $\Gamma$:Left:$\Gamma$ is small as streamline and pathline separate soon.Middle:$\Gamma$ is in middle as streamline and pathline stick together first and then separate.Right:$\Gamma$ is great as streamline and pathline stick together all the time. }}
+			\label{fig:TimeByFixedDistance}
+		\end{figure}
+	
+} % END OF FRAME
+%----------------------------------------
+\frame{
+	\frametitle{Advantage and Disadvantage}
+	\begin{columns}[t]
+		\begin{column}{.5\textwidth}
+			{\color{unirot}Advantage}
+			\begin{itemize}
+				\item{\tiny  Easy to find out which part of data is not time dependency.} \\
+				{\tiny If $\Gamma$ is great, it is easy to say along the streamline and pathline the velocity is quite not time dependent, because pathline and streamline should almost stick together.}
+				\item {\tiny Easy to find out which part of data is highly time dependency in time $[0,\Gamma]$}.\\
+			{\tiny 	If $\Gamma$ is small,  it is easy to say along the streamline and pathline the velocity is quite time dependent in time $[0,\Gamma]$, because pathline and streamline should separate soon.}			
+			\end{itemize}
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			{\color{unirot}Disadvantage} 
+			\begin{itemize}
+				\item {\tiny Can not know the time dependency characteristics after time $\Gamma$ in the time dependent area }.\\
+			{\tiny 	If $\Gamma$ is small, then obviously to know data in time $[0,\Gamma]$ is time dependent, but it is also very difficult to measure how the data change after time $\Gamma$, as people can not predict data changing later.}
+			\end{itemize}
+		\end{column}	
+	\end{columns}
+	\vfill
+} % END OF FRAME
+%----------------------------------------
+	
+\frame{
+	\frametitle{Result }
+	\begin{columns}[t]
+		\begin{column}{.45\textwidth}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.75\textwidth]{pic/Nor039Start250Reachtime.png}
+				\caption{{\tiny Result of $\Gamma$ by setting $NorSPDis$ 0.39. Seeds of streamline and pathline start at time T=6.25s and go 2s}}
+				\label{fig:Nor039Start250Reachtime}
+			\end{figure}	
+		\end{column}
+		\begin{column}{.45\textwidth}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.75\textwidth]{pic/Nor039Start250ReachTimeStreamlinePathline.png}
+				\caption{{\tiny streamline and pathline example of high time dependency and low time dependency area. red curves are pathlines, blue curves are streamlines}}
+				\label{fig:Nor039Start250ReachTimeStreamlinePathline}
+			\end{figure}
+		\end{column}	
+	\end{columns}
+	{\tiny 	The  red cycle area shows low time dependency, while the green area shows high time dependency in figure\ref{fig:Nor039Start250Reachtime}. Figure\ref{fig:Nor039Start250ReachTimeStreamlinePathline} shows the streamline and pathline example in both area. In the up area, streamlines and pathlines have almost the same track, while in the down area, streamlines and pathlines separate soon. }
+	\vfill	
+} % END OF FRAME
+
+%----------------------------------------
+\subsection{Valley Surface Detection of $\Gamma$ Scalar Field Data}
+\frame{
+	\frametitle{Valley Surface Detection of $\Gamma$ Scalar Field Data}
+	\begin{itemize}
+		\item $\Gamma$ Scalar Field Data\\
+		Choose a continue start time range $[T_{1},T_{2}]$ and set a $NorSPDis=\mu$, computing $\Gamma$ for every grid point $\vect{X}\in \vect{D}\subset R^{2}$ from $T_{1}$ to $T_{2}$.
+		\item Valley surface Detection\\
+		We can detect the valley surface. It shows the most strongly time dependent part of data and also shows how the time dependent part changing with time.
+	\end{itemize}
+	
+} % END OF FRAME
+
+%----------------------------------------	
+\frame{
+	\frametitle{Valley Surface Detection of $\Gamma$ Scalar Field Data}
+    \begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\textwidth]{pic/Nor039Star250ReachTimeValleySurface.png}
+	\caption{{\tiny Valley Surface of the $\Gamma$ scalar field data of setting $NorSPDis=0.39$}}
+	\label{fig:Nor039Star250ReachTimeValleySurface}
+    \end{figure}
+    From the figure, we can see some blue surface which should be the streamline and pathline separation fast area.
+    
+	
+} % END OF FRAME
+
+
+%----------------------------------------
+
+
+
+\end{document}
