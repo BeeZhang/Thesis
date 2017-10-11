@@ -46,31 +46,44 @@
 
 \begin{document}
 	\section{Dynamic System}
-	Define a 2d space $\vect{D}$,  $\vect{D}\subset \vect{R}^{2}$, $\vect{X}\in \vect{D}$.\\
-	Define a 3d time-space space $\Omega$, $\Omega \subset \vect{R}^{2}\times\vect{R}$, $\vect{\xi} \in \vect{\Omega}$.
-	Here $\vect{X}(t;t_{0},\vect{X}_{0}) \in \vect{D}$. $\vect{X}(t;t_{0},\vect{X}_{0})$ means if a massless particle is released at time $t_{0}$, the position of the particle at time $t$. \\
+	In this chapter, we are introducing concepts of \textit{Dynamic System }, especially those terminologies and concept of \textit{flow}, which is a common kind of dynamic system and our theories of measuring time dependency characteristics is using on flow system. \\
+	\subsection{Dynamic System}
+	Enormous variety of different kinds of system can be called "dynamic system". Generally, if a system evolves with time, possibly it is one of dynamic systems, and this also predicates the significance of analyzing time dependency property of dynamic system. For instance ,double pendulum which is a pendulum with another pendulum attached to its end can be describe as a dynamic system and exhibits rich dynamical behavior. \\
 	
-	$\vect{V}(\vect{X}(t;t_{0},\vect{X}_{0}),t)$ is the velocity at $\vect{X} \in D$ at time $t$ and $\vect{V}$ satisfied some level of continuity. To be specific, $\vect{V}\subset \Omega$ but with the third dimension fixed, for instance it keeps 0.04.  \\
-	And dynamical system can be describe as below equations:\\
-	\begin{eqnarray}
-	\vect{X}^{'}(t;t_{0},\vect{X}_{0})=\vect{V}(\vect{X}(t;t_{0},\vect{X}_{0}),t)
-	\end{eqnarray}
-	\begin{eqnarray}
-	\vect{X}(t_{0};t_{0},\vect{X}_{0})=\vect{X}_{0}
-	\end{eqnarray}
-	In paraview, we can show velocity by using arrow, the length of the arrow standing for the magnitude of velocity and the direction of arrow presenting the direction of velocity. By arrows, it is easy to show the velocity at any space at any time. However, it is hard to figure out how velocity changing with time. For instance, in figure\ref{fig:Overviewofvelocitydata}, getting velocity at any point is obvious, otherwise presenting velocity changing is not, i.e it is hard to show time dependency of data. 
+	A dynamic system usually has various \textbf{states} $S_{i}$ at different time. Usually system evolving with time leads a sequence of states $S_{0}$, $S_{1}$,...,$S_{i}$,...,$S_{n-1}$, $S_{n}$, which is called \textbf{trajectory}, and \textbf{state transition} is the system changes from one state to another. Still take the double pendulum as an example, $S_{i}$ is the position of those two pendulums $(x_{1i},y_{1i},x_{2i},y_{2i})$ , where $(x_{1i},y_{1i})$ and $x_{2i},y_{2i})$ are the coordinate position of those two pendulums, while the state from $S_{i}(x_{1i},y_{1i},x_{2i},y_{2i})$ to $S_{j}(x_{1j},y_{1j},x_{2j},y_{2j})$ is a state transition and in a continuity time period all states composed a trajectory as the figure\ref{fig:DoublePendulums}.\\
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.65\textwidth]{pic/OverviewOfVelocityData.png}
-		\caption{{\tiny Overview of the Velocity Data. X, Y present the space of data, Z is time of data.}}
-		\label{fig:Overviewofvelocitydata}
+		\includegraphics[width=0.5\textwidth]{pic/DoublePendulums.png}
+		\caption{\tiny Double pendulums model trajectory.\cite{DoublePendulum} }
+		\label{fig:DoublePendulums}
 	\end{figure}
+	
+	Mathematically, dynamic system can be describe in continuous case by Ordinary differential equations:
+	\begin{eqnarray}
+		\vect{X}^{'}(t;t_{0},\vect{X}_{0})=\frac{d\vect{X}(t;t_{0},\vect{X}_{0})}{dt}=\vect{V}(\vect{X},t)\\
+		\vect{X}(t_{0};t_{0},\vect{X}_{0})=\vect{X}_{0}
+	\end{eqnarray}
+	where $\vect{X}(t;t_{0},\vect{X}_{0})\in \vect{R^{n}}$, $t\in R$,$\vect{V}:\vect{R^{n}}\rightarrow\vect{R^{n}}$, $t_{0}$ is initial time and $\vect{X_{0}}$ is initial state at $t_{0}$.\\
+	The solution of equation $\psi(t,t_{0}\vect{X_{0}})$ is the trajectory of the dynamic system.\\
+	In discrete case, equations:
+	\begin{eqnarray}
+		\Delta\vect{X}(t;t_{0},\vect{X}_{0})=\vect{X}(t+1;t_{0},\vect{X}_{0})-\vect{X}(t;t_{0},\vect{X}_{0})=\vect{V}(\vect{X},t)\\
+		\vect{X}(t_{0};t_{0},\vect{X}_{0})=\vect{X}_{0}
+	\end{eqnarray}
+	where $t\in Z$. In dynamical system visualization area, usually the discrete equations are applied, which will mainly occur in next parts of this thesis.\\
+	It is also possible to use other equations to exhibit the dynamic system, for instance, $\vect{X}(t+1,t_{0},\vect{X}_{0})=V(\vect{X}(t,t_{0},\vect{X}_{0}))$. If $V(\vect{X}(t,t_{0},\vect{X}_{0}))$ depends on $t$, then the system is time-dependent, or it is time-independent also called stationary system.
+	
+	\subsection{Fluid Flow And Vector Field}
+	As one of the most important dynamical system, fluid flow is fluids such as gas and liquids in motion. The intuitive example of fluid flow is air flow which is wind around us. Obviously, it is possible to measure numerous properties of the fluid flow, for example velocity, temperature and stress. In my thesis, I focus on the variable-velocity in 2 dimension.\\
+	As to velocity, it is common to assign a vector $\vect{V}\in \vect{R^{n}}$ to present a velocity. The magnitude of vector $\lvert\vect{V}\rvert=\sqrt{\sum_{i=0}^{i=n-1}v_{i}^{2}}$ is the magnitude of the velocity and $v_{i}$ is the magnitude in one dimension. Vectors presenting velocity at points in fluid flow compose the vector field of the fluid flow. In this thesis, I am using 3d vector data in 3d domain to present data time dependent in a fluid flow. For more specific, we measure the velocity 401 times in the same 2d space in a period which is 10 seconds, so that we get the velocity of fluid flow during in the area during this 10 seconds period. Afterwards, build a 3 dimension data domain, where two dimensions present the 2d space and other dimension presents time. \\
+	In vector field visualization, it is quite popular to present a vector by arrow, the length of the arrow standing for the magnitude of velocity and the direction of arrow presenting direction.
+
 	\begin{figure}[H]
 		\begin{minipage}{0.5\textwidth}
 			\centering
-			\includegraphics[width=0.5\textwidth]{pic/VelocityDataAt5s.png}
-			\caption{\tiny Velocity of the space at time=5s }
-			\label{fig:VelocityDataAt5s}
+			\includegraphics[width=0.5\textwidth]{pic/DataModel.png}
+			\caption{\tiny Data: x axis and y axis present the space, z axis present time. And two slices at time 5.0s and 7.5s}
+			\label{fig:DataModel}
 		\end{minipage}
 		\begin{minipage}{0.5\textwidth}
 			\centering
@@ -78,38 +91,72 @@
 			\caption{\tiny Velocity of the space at time=7.5s}
 			\label{fig:VelocityDataAt7.5s}
 		\end{minipage}
-	\end{figure}
-	Figure\ref{fig:VelocityDataAt5s} and figure\ref{fig:VelocityDataAt7.5s} show the velocity at time 5s and time 7.5s, which describe the whole picture of velocity at those two moments and give the basic idea of how the velocity flow in the space at the exact moment. Nevertheless, at numerical situation, the translation between those two moment or during this two moments matters extremely. For instance, as to weather casting, the airflow transformation make a strongly influence on weather change. From figure\ref{fig:VelocityDataAt5s} and figure\ref{fig:VelocityDataAt7.5s}, we can only get seldom information about the transformation and there are not quantitative measurements.\\
-	Recently, making a video of the data can be an alternative. The idea is getting a series of picture which present the velocity at one moment and take one picture as a frame of the video. Generally, the video reveals velocity through time dynamic and it is called velocity video. By the velocity video, people can get the rough idea of velocity changing. Taking the airflow as the example again, it is easy and fast to be aware of the center of vortex moving. Moreover, it is common and reasonable to present the vary of data, therefor making a video about velocity differential on time and the material differential about data is also a good idea.\\
+	\end{figure}	
+	Mathematically, as similar as dynamic system:\\
+	Define a 2d space $\vect{D}$,  $\vect{D}\subset \vect{R}^{2}$, $\vect{X}\in \vect{D}$.\\
+	Define a 3d data domain $\vect{\Omega}$, $\vect{\Omega} \subset \vect{R}^{2}\times\vect{R}$, where 2 dimensions are space and 1 dimension is time. $\vect{\xi}(\vect{X},T) \in \vect{\Omega}$ means $\vect{X}$ at time $T$.To be specific, $\vect{V}\subset \Omega$ but with the third dimension fixed, only consider about 2 dimensions of the vector data set.\\
+	Define a 3d vector data set $\vect{V}(\xi(\vect{X},T))$ is the velocity at position $\vect{X}(x,y) \in D$ at time $T$ and $\vect{V}$ satisfied Lipschitz continuous.\\
+	Here Lipschitz continuous means:\\
+	$\forall\vect{X_{01}}, \vect{X_{02}}\in \vect{D}$ and $\forall t\in R$, $\exists\geq0$ such that:\\
+	$$\lVert \vect{V}(t;\xi(\vect{X_{01}},T+t))-\vect{V}(t;\xi(\vect{X_{01}},T+t))\rVert\leq K\lVert\vect{X_{01}}-\vect{X_{02}}\rVert$$
+
+	And flow can be describe by below equations:\\
+	\begin{eqnarray}
+	\vect{\xi}^{'}(t;\xi(\vect{X_{0}},T+t))=\frac{\vect{\xi}(t;\xi(\vect{X_{0}},T+t))}{dt}=\vect{V}(t;\xi(\vect{X_{0}},T+t))\\
+	\vect{\xi}(0;\vect{X}_{0},T)=\xi(\vect{X_{0}},T)
+	\end{eqnarray}
+	In discrete case, equations:
+	\begin{eqnarray}
+	\Delta\vect{X}(t;t_{0},\xi(\vect{X}_{0},T+t))=\vect{X}(t+1;t_{0},\xi(\vect{X}_{0},T+t))-\vect{X}(t;t_{0},\xi(\vect{X}_{0},T+t))\\
+	\Delta\vect{X}(t;t_{0},\xi(\vect{X}_{0},T+t))=\vect{V}(t;\xi(\vect{X_{0}},T+t))\\
+	\vect{\xi}(0;\vect{X}_{0},T)=\xi(\vect{X_{0}},T)
+	\end{eqnarray}
+	where $t, T\in Z$. 
+
+	Figure\ref{fig:DataModel} and figure\ref{fig:VelocityDataAt7.5s} show outline of the data and velocity vectors at time=7.5s.\\
+	So far, it only shows vector field itself, but does not show how vectors changing in the period. In paraview, making a video of the vector field alternatively can show vector altering. The idea is getting a series of picture which present the velocity at one moment and take one picture as a frame of the video.By the velocity video, people can get the rough idea of velocity changing.\\
+	However, it is still not a good way to show the time dependency, because there is not specific quantitative measurement to present the property directly. 
 	
-	\section{Streamline and Pathline}
-
-    // can insert some explain of differential on time and material differential here//\\
-
-  
-	Nowadays, streamlines and pathlines are applied into time dependency analysis of vector field visualization. \\
-	Streamlines are a family of curves that are instantaneously tangent to the velocity vector of the flow. These show the direction in which a massless fluid element will travel at any point in time\cite{StreamlineDefine}. This denotes streamlines indicate  velocity at one moment. Actually, a streamline is a path traced out by a massless particle as it moves with the flow at this moment.\\
-	When construct the streamline, with the flow we calculate the position of massless particle after it is released.\\
-	// can insert streamline algorithm.\\
+	\section{Stream Line and Path Line}
+	\subsection{Stream  Line}
+	Streamlines are a family of curves that are instantaneously tangent to the velocity vector of the flow. These show the direction in which a massless fluid element will travel at any point in time\cite{StreamlineDefine}. This denotes that streamlines indicate velocity at one specific moment and presenting the vector structure at this moment. Actually, a streamline is the path traced out by a massless particle as it moves with the flow at this moment.\\
+	Moreover, stream line is a restrict Eulerian approach which is used to obtain a clear idea of the flow at one particular instant. People can take it as a photograph of the flow, for instance in the vector field we mentioned before(see figure\ref{fig:DataModel}), every $Z$ direction slice is a Eulerian approach view.\\
+	When construct the streamline, we set a "virtual time step" $\Delta t$, which means it is only used to computing points along the streamline. In discrete case, pick a point call seed from the space with velocity vector $V$ and get the next point of the streamline by $V\cdot\Delta t$, then repeat from this point until to the total time $t_{n}$. Even though, time is mentioned frequently when construct stream line, actually it does not related to real time, so stream line is time-independent.\\
+	Mathematically, define $\phi^{t}(\vect{X}_{0},T)\in D$ as the point streamline reaching at time $t$ after start, and the streamline starts at seed $\xi(\vect{X_{0}},T)$. \\
+	Satisfied differential equations:\\
+	\begin{eqnarray}
+	\frac{d\phi^{t}(\vect{X}_{0},T)}{dt}=V(\phi^{t}(\vect{X}_{0},T),T)\\
+	\phi^{t=0}(\vect{X}_{0},T)=\xi(\vect{X_{0}},T)
+	\end{eqnarray}
+	Below is the algorithm when construct stream lines.\\
+	\begin{algorithm}[H]
+		\KwData{Vector field data set}
+		\KwResult{stream lines}
+		Set the time slice where stream lines would be.\\
+		Select space area which seeds from and the number of seeds$s$.\\
+		Get seeds by picking points uniform from the area or using Poisson sampling.\\ 
+		Set time step $\Delta t$ and total time $t_{n}$. \\
+		Get number of points along one stream line $n$.\\
+		\For {$i\leftarrow 0$ \KwTo $s-1$}
+		{
+			Set seed coordinate $S_{i0}$\\
+			\For{$j\leftarrow 0$ \KwTo $n-1$}{
+				Get velocity $V_{ij}$ of the seed by Runge-Kutta 4th order interplation.\\
+				Computing the next point $S_{ij+1}$ coordinate by $S_{ij}+V\cdot \Delta t$;\\
+				use a vtk line to contact the $S_{ij+1}$ and $S_{ij}$\\
+				}
+			Show one stream line;
+			}
+	\end{algorithm}
+    In the figure\ref{fig:streamlineattime=5s}, we can see some stream lines structure. Some stream lines are closed, which means at this time slice flow is an vortex.
 	\begin{figure}[H]
 	\centering
-	\includegraphics[width=0.65\textwidth]{pic/streamlineattime=5s.png}
+	\includegraphics[width=0.8\textwidth]{pic/streamlineattime=5s.png}
 	\caption{{\tiny some streamlines at time=5s. Arrows are the flow and those tubes are streamlines}}
 	\label{fig:streamlineattime=5s}
 	\end{figure}
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.65\textwidth]{pic/somestreamlineattime=5s.png}
-		\caption{{\tiny some streamlines at time=5s. More specific, we can see streamlines going with the flow and from those red seeds.}}
-		\label{fig:somestreamlineattime=5s}
-	\end{figure}
 	
-	Mathematically, define $\phi_{t_{0}}^{t_{n}}(\vect{X}_{0})$ as the streamline point after time $t_{n}$ start from  $\vect{X}_{0}$ at $t_{0}$. \\
-	And streamline is the solution of differential equations:\\
-	\begin{eqnarray}
-	\frac{d\phi_{t_{0}}^{t_{n}}(\vect{X}_{0})}{dt_{n}}=V(\phi_{t_{0}}^{t_{n}}(\vect{X}_{0}),t_{0})\\
-	\phi_{t_{0}}^{t_{0}}(\vect{X}_{0})=\vect{X}_{0}
-	\end{eqnarray}
+	\subsection{Path Line}
 	As similar as streamline, pathlines are the trajectories that individual fluid particles follow. These can be thought of as "recording" the path of a fluid element in the flow over a certain period. The direction the path takes will be determined by the streamlines of the fluid at each moment in time\cite{PathlineDefine}. Basing on the definition, the difference between pathline and streamline is streamline follows the flow only at one moment, while pathline follows the  flow  through a period, i.e the velocity data field for streamline is always the velocity at time moment $t_{0}$, while the velocity data field for pathline is start from the moment $t_{0}$ and afterwards. When construct pathline, at every time step, the velocity is from different moment.\\
 		\begin{figure}[H]
 			\centering
@@ -704,6 +751,10 @@ Get the Hesse Matrix of the data and compare to get the surface.
 	\bibitem{PathlineDefine} 
 	Definition of Pathlines
 	\\\texttt{https://en.wikipedia.org/wiki/Streamlines,streaklines,andpathlines}
+	
+	\bibitem{DoublePendulum} 
+	Picture of Double Pendulum Trajectory
+	\\\texttt{https://en.wikipedia.org/wiki/Doublependulum}
 \end{thebibliography}
 
 
