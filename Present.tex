@@ -95,7 +95,7 @@
 	Mathematically, as similar as dynamic system:\\
 	Define a 2d space $\vect{D}$,  $\vect{D}\subset \vect{R}^{2}$, $\vect{X}\in \vect{D}$.\\
 	Define a 3d data domain $\vect{\Omega}$, $\vect{\Omega} \subset \vect{R}^{2}\times\vect{R}$, where 2 dimensions are space and 1 dimension is time. $\vect{\xi}(\vect{X},T) \in \vect{\Omega}$ means $\vect{X}$ at time $T$.To be specific, $\vect{V}\subset \Omega$ but with the third dimension fixed, only consider about 2 dimensions of the vector data set.\\
-	Define a 3d vector data set $\vect{V}(\xi(\vect{X},T))$ is the velocity at position $\vect{X}(x,y) \in D$ at time $T$ and $\vect{V}$ satisfied Lipschitz continuous.\\
+	Define a 2d vector data set $\vect{V}(\xi(\vect{X},T))$ is the velocity at position $\vect{X}(x,y) \in D$ at time $T$ and $\vect{V}$ satisfied Lipschitz continuous.\\
 	Here Lipschitz continuous means:\\
 	$\forall\vect{X_{01}}, \vect{X_{02}}\in \vect{D}$ and $\forall t\in R$, $\exists\geq0$ such that:\\
 	$$\lVert \vect{V}(t;\xi(\vect{X_{01}},T+t))-\vect{V}(t;\xi(\vect{X_{01}},T+t))\rVert\leq K\lVert\vect{X_{01}}-\vect{X_{02}}\rVert$$
@@ -128,6 +128,13 @@
 	\frac{d\phi^{t}(\vect{X}_{0},T)}{dt}=V(\phi^{t}(\vect{X}_{0},T),T)\\
 	\phi^{t=0}(\vect{X}_{0},T)=\xi(\vect{X_{0}},T)
 	\end{eqnarray}
+	where $t,T\in R$.\\
+	In discrete case, equations:\\
+	\begin{eqnarray}
+	\lVert\phi^{t+1}(\vect{X}_{0},T)-\phi^{t}(\vect{X}_{0},T)\rVert=V(\phi^{t}(\vect{X}_{0},T),T)\\
+	\phi^{t=0}(\vect{X}_{0},T)=\xi(\vect{X_{0}},T)
+	\end{eqnarray}
+	where $t,T\in Z$.\\ 
 	Below is the algorithm when construct stream lines.\\
 	\begin{algorithm}[H]
 		\KwData{Vector field data set}
@@ -157,29 +164,64 @@
 	\end{figure}
 	
 	\subsection{Path Line}
-	As similar as streamline, pathlines are the trajectories that individual fluid particles follow. These can be thought of as "recording" the path of a fluid element in the flow over a certain period. The direction the path takes will be determined by the streamlines of the fluid at each moment in time\cite{PathlineDefine}. Basing on the definition, the difference between pathline and streamline is streamline follows the flow only at one moment, while pathline follows the  flow  through a period, i.e the velocity data field for streamline is always the velocity at time moment $t_{0}$, while the velocity data field for pathline is start from the moment $t_{0}$ and afterwards. When construct pathline, at every time step, the velocity is from different moment.\\
-		\begin{figure}[H]
+	Except Eulerian approach (also called Eulerian way), \textit{Lagrangian way} is the approach tracking individual massless fluid particles in flow during a period of time in a vector field. Unlike Eulerian approach which defines a control volume and describes the vector field in it at one specific time.\\
+	Path lines is exactly curves reflecting Lagrangian way. Path lines are trajectories that individual massless fluid particles flow, which can be thought of as "recording" the path of a fluid element in the flow over a certain period. The direction path lines take will be determined by the stream lines of the fluid at each moment in time\cite{PathlineDefine}. Basing on definitions, the main difference between path lines and stream lines is related to time, i.e stream lines are time-independent while path lines are time-independent. Exactly because of this property, I will compare stream lines and path lines in next chapters and show how the vector field data dependent on time.\\
+	When construct path lines, we pick some seeds where path lines start at one moment $T_{0}$. As similar as constructing stream lines, the "time step" $\Delta t$ should also be set, which is "real time" here. In other words, when compute the $n^{th}$ point of path line after the $(n-1)^{th}$ point, the velocity at time $T_{0}+n\cdot\Delta t$ is applied.\\
+	 \begin{figure}[H]
+	 	\begin{minipage}{0.45\textwidth}
+	 		\centering
+	 		\includegraphics[width=0.7\textwidth]{pic/ConstructStreamlineAndPathlinet0t1.png}
+	 		\caption{{\tiny velocity at time $t_{0}$ and $t_{1}$ of a simple vector field data.}}
+	 		\label{fig:ConstructStreamlineAndPathlinet0t1}
+	 	\end{minipage}
+	 	\begin{minipage}{0.45\textwidth}
+	         \centering
+	 		 \includegraphics[width=0.7\textwidth]{pic/ConstructStreamlineAndPathlinet2t3.png}
+	 		 \caption{{\tiny velocity at time $t_{2}$ and $t_{3}$ of a simple vector field data.}}
+	 		 \label{fig:ConstructStreamlineAndPathlinet2t3}
+	 	\end{minipage}
+	 	\begin{minipage}{0.45\textwidth}
+	 		 \centering
+	 		 \includegraphics[width=0.7\textwidth]{pic/pathline.png}
+	 		 \caption{{\tiny path line in period $t_{0}$ to $t_{3}$.}}
+	 		 \label{fig:pathline}
+	 	\end{minipage}
+	 	\begin{minipage}{0.45\textwidth}
+	    	 \centering
+	 		 \includegraphics[width=0.7\textwidth]{pic/streamline.png}
+	 		 \caption{{\tiny streamline at time $t_{3}$.}}
+	 		 \label{fig:streamline}
+	 \end{minipage}
+	 \end{figure}
+	\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.65\textwidth]{pic/pathlines.png}
+			\includegraphics[width=0.35\textwidth]{pic/pathlines.png}
 			\caption{{\tiny some pathlines at time=5s and end at 8s from those red seeds. we can see pathline go through the flow through time.}}
 			\label{fig:pathlineatfrom5s}
 		\end{figure}
-	Mathematically define $\psi_{t_{0}}^{t_{n}}(X_{0})$ is the pathline point after time $t_{n}$ start from $\vect{X}_{0}$ at $t_{0}$.\\
+	Mathematically define $\psi^{t}(X_{0},T)\in\vect{D}$ is the path line point after time $t$ start from $\vect{X}_{0}$ at $T$, $t,T\in R$.\\
 	And pathline is the solution of differential equations:\\
+    \begin{eqnarray}
+    \frac{d\psi^{t}(\vect{X}_{0},T)}{dt}=V(\psi^{t}(\vect{X}_{0},T),T+t)\\
+    \psi^{t=0}(\vect{X}_{0},T)=\xi(\vect{X_{0}},T)
+    \end{eqnarray}
+    In discrete case, equations:\\
+    \begin{eqnarray}
+    \lVert\psi^{t+1}(\vect{X}_{0},T)-\psi^{t}(\vect{X}_{0},T)\rVert=V(\psi^{t}(\vect{X}_{0},T),T+t)\\
+    \phi^{t=0}(\vect{X}_{0},T)=\xi(\vect{X_{0}},T)
+    \end{eqnarray}
+    where $t,T\in Z$.\\ 
+    Apparently, equations described stream lines and path lines indicate path lines are time-dependent and stream lines are not.\\
+	Moreover, as stream lines and path lines are continuous and steady by given a vector field data set, which means if set a massless fluid particle in any point along the stream line or path line curve,by controlling the time the particle flow, the exactly overlapped stream line and path line can be constructed . As this theory existing, we can know time dependency analysis basing on comparison of path line and stream line is steady.\\
+	Mathematically, it is shown:\\
 	\begin{eqnarray}
-		\frac{d\psi_{t_{0}}^{t_{n}}(\vect{X}_{0})}{dt}=V(\psi_{t_{0}}^{t_{n}}(\vect{X}_{0}),t_{n}+t_{0})
-		\psi_{t_{0}}^{t_{0}}(\vect{X}_{0})=\vect{X}_{0}
-	\end{eqnarray}
-	Also, streamlines and pathlines are continuity, which means we can start streamline or pathline in any point in the streamline or pathline curve and get a completely overlapped streamline and pathline afterwards.  
-	\begin{eqnarray}
-	\phi_{t_{0}}^{t_{m}+t_{n}}(\vect{X}_{0})=\phi_{t_{m}+t_{0}}^{t_{n}}(\phi_{t_{0}}^{t_{m}}(\vect{X}_{0}))=\phi_{t_{n}+t_{0}}^{t_{m}}(\phi_{t_{0}}^{t_{n}}(\vect{X}_{0}))
+	\phi^{t_{m}+t_{n}}(\vect{X}_{0},T)=\phi^{t_{n}}(\phi^{t_{m}}(\vect{X}_{0},T),T+t_{m})=\phi^{t_{m}}(\phi^{t_{n}}(\vect{X}_{0},T),T+t_{n})
 	\end{eqnarray}
 	\begin{eqnarray}
-	\psi_{t_{0}}^{t_{m}+t_{n}}(\vect{X}_{0})=\psi_{t_{m}+t_{0}}^{t_{n}}(\psi_{t_{0}}^{t_{m}}(\vect{X}_{0}))=\psi_{t_{n}+t_{0}}^{t_{m}}(\psi_{t_{0}}^{t_{n}}(\vect{X}_{0}))
+	\psi^{t_{m}+t_{n}}(\vect{X}_{0},T)=\psi^{t_{n}}(\psi^{t_{m}}(\vect{X}_{0},T),T+t_{m})=\psi^{t_{m}}(\psi^{t_{n}}(\vect{X}_{0},T),T+t_{n})
 	\end{eqnarray}
+	where $T,t_{m},t_{n}\in R$.
 
-	
-	
 	\section{Distance of Streamline and Pathline}
 
 	
